@@ -1,0 +1,216 @@
+/* Color Variables */
+:root {
+    --barn-red: #780000;
+    --fire-brick: #c1121f;
+    --papaya-whip: #fdf0d5;
+    --prussian-blue: #003049;
+    --air-superiority-blue: #669bbc;
+}
+
+/* Main App Background */
+.stApp {
+    background-color: var(--prussian-blue);
+    color: var(--papaya-whip);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Top Navbar Styling */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: var(--air-superiority-blue);
+    border-radius: 8px 8px 0 0;
+    padding: 0.5rem;
+    margin-bottom: 0;
+    gap: 0.25rem;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background-color: white;
+    color: var(--prussian-blue);
+    border: none;
+    border-radius: 6px 6px 0 0;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    background-color: var(--fire-brick);
+    color: var(--papaya-whip);
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: var(--papaya-whip) !important;
+    color: var(--prussian-blue) !important;
+}
+
+/* Tab Content Area */
+.stTabs [data-baseweb="tab-panel"] {
+    background-color: var(--papaya-whip);
+    color: var(--prussian-blue);
+    border-radius: 0 0 8px 8px;
+    padding: 2rem;
+    margin-top: 0;
+    border-top: none;
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: var(--barn-red);
+    font-weight: 600;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: var(--fire-brick);
+    color: var(--papaya-whip);
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.stButton > button:hover {
+    background-color: var(--barn-red);
+    color: var(--papaya-whip);
+    transform: translateY(-1px);
+}
+
+/* Success/Info Messages */
+.stSuccess {
+    background-color: rgba(102, 155, 188, 0.2);
+    border-left: 4px solid var(--air-superiority-blue);
+    color: var(--prussian-blue);
+    border-radius: 0 6px 6px 0;
+}
+
+.stInfo {
+    background-color: rgba(0, 48, 73, 0.1);
+    border-left: 4px solid var(--prussian-blue);
+    color: var(--prussian-blue);
+    border-radius: 0 6px 6px 0;
+}
+
+.stWarning {
+    background-color: rgba(193, 18, 31, 0.2);
+    border-left: 4px solid var(--fire-brick);
+    color: var(--barn-red);
+    border-radius: 0 6px 6px 0;
+}
+
+/* Metrics */
+.stMetric {
+    background-color: white;
+    border: 1px solid var(--air-superiority-blue);
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.stMetric [data-testid="metric-container"] {
+    background-color: white;
+    border-radius: 6px;
+    padding: 1rem;
+    border: 1px solid var(--air-superiority-blue);
+    color: var(--prussian-blue);
+}
+
+/* File Uploader */
+.stFileUploader {
+    border: 2px dashed var(--air-superiority-blue);
+    border-radius: 8px;
+    background-color: white;
+}
+
+.stFileUploader [data-testid="stFileUploaderDropzone"] {
+    background-color: white;
+    border-radius: 6px;
+    color: var(--prussian-blue);
+}
+
+/* DataFrames */
+.stDataFrame {
+    border: 1px solid var(--air-superiority-blue);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Selectbox and other inputs */
+.stSelectbox > div > div {
+    background-color: white;
+    border: 1px solid var(--air-superiority-blue);
+    border-radius: 6px;
+}
+
+.stSlider > div > div {
+    color: var(--prussian-blue);
+}
+
+/* Progress indicators */
+.stProgress .st-emotion-cache-1iyw2u1 {
+    background-color: var(--air-superiority-blue);
+}
+
+/* Main title on dark background */
+.main-title {
+    color: var(--papaya-whip);
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Section headers on papaya background */
+.section-header {
+    color: var(--barn-red);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem 0;
+    border-bottom: 2px solid var(--air-superiority-blue);
+    padding-bottom: 0.5rem;
+}
+
+.info-card {
+    background-color: white;
+    border: 1px solid var(--air-superiority-blue);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    color: var(--prussian-blue);
+}
+
+.model-results {
+    background-color: white;
+    border-left: 4px solid var(--air-superiority-blue);
+    padding: 1rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    color: var(--prussian-blue);
+}
+
+.comparison-winner {
+    background-color: rgba(120, 0, 0, 0.1);
+    border: 2px solid var(--barn-red);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    color: var(--barn-red);
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .stTabs [data-baseweb="tab"] {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .stTabs [data-baseweb="tab-panel"] {
+        padding: 1rem;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+}
