@@ -1,0 +1,563 @@
+/* Modern Minimalist Theme */
+
+:root {
+    --slate-900: #0f172a;
+    --slate-700: #334155;
+    --slate-600: #475569;
+    --slate-300: #cbd5e1;
+    --slate-100: #f1f5f9;
+    --blue-600: #2563eb;
+    --blue-500: #3b82f6;
+    --blue-100: #dbeafe;
+    --white: #ffffff;
+    --gray-50: #f8f9fa;
+}
+
+/* Overall page background - full width */
+.stApp {
+    background-color: var(--gray-50) !important;
+    color: var(--slate-700) !important;
+}
+
+/* Main container - centered and constrained */
+.main .block-container {
+    max-width: 1800px !important;
+    margin: 0 auto !important;
+    padding: 2rem !important;
+    text-align: center !important;
+}
+
+/* Constrain ALL components to max width */
+.stButton,
+.stTextArea,
+.stFileUploader,
+.stRadio,
+.stSelectbox,
+.stMarkdown,
+.stAlert,
+.stSuccess,
+.stError,
+.stWarning,
+.stInfo,
+.stTabs,
+.stMetric,
+.stDataFrame {
+    max-width: 1800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Tab styling - clean and modern */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: var(--white) !important;
+    border-radius: 8px 8px 0 0 !important;
+    padding: 0.5rem !important;
+    margin-bottom: 0 !important;
+    gap: 0.25rem !important;
+    border-bottom: 1px solid var(--slate-300) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background-color: var(--gray-50) !important;
+    color: var(--slate-600) !important;
+    border: none !important;
+    border-radius: 6px 6px 0 0 !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    background-color: var(--blue-100) !important;
+    color: var(--blue-600) !important;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: var(--white) !important;
+    color: var(--blue-600) !important;
+    font-weight: 600 !important;
+}
+
+/* Tab content area */
+.stTabs [data-baseweb="tab-panel"] {
+    background-color: var(--white) !important;
+    color: var(--slate-700) !important;
+    border-radius: 0 0 8px 8px !important;
+    padding: 2rem !important;
+    margin-top: 0 !important;
+    border-top: none !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Headers - clean and centered */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--slate-900) !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    margin: 1rem auto !important;
+    max-width: 1800px !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+h1 {
+    font-size: 18px !important;
+    color: var(--blue-600) !important;
+    margin-bottom: 0.5rem !important;
+}
+
+h2 {
+    font-size: 16px !important;
+    color: var(--slate-900) !important;
+    border-bottom: 2px solid var(--blue-500) !important;
+    padding-bottom: 0.5rem !important;
+    margin: 1.5rem auto 1rem auto !important;
+    width: fit-content !important;
+}
+
+/* All text dark and readable */
+p, span, div, label {
+    color: var(--slate-700) !important;
+    text-align: center !important;
+}
+
+/* Buttons - clean and professional with subtle hover */
+.stButton {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 1rem auto !important;
+}
+
+.stButton > button {
+    width: 100% !important;
+    max-width: 300px !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 1.5rem !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+    background-color: var(--blue-500) !important;
+    color: var(--white) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    opacity: 1 !important;
+}
+
+.stButton > button:hover {
+    opacity: 0.85 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Text areas */
+.stTextArea {
+    max-width: 1800px !important;
+    margin: 1rem auto !important;
+    text-align: center !important;
+}
+
+.stTextArea label {
+    color: var(--slate-700) !important;
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+    font-weight: 500 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.stTextArea textarea {
+    font-family: 'Courier New', monospace !important;
+    background: var(--white) !important;
+    border: 2px solid var(--slate-300) !important;
+    border-radius: 6px !important;
+    padding: 1rem !important;
+    width: 100% !important;
+    max-width: 1800px !important;
+    color: var(--slate-700) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.stTextArea textarea:focus {
+    border-color: var(--blue-500) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* File uploader */
+.stFileUploader {
+    margin: 1rem auto !important;
+    padding: 1.5rem !important;
+    border-radius: 8px !important;
+    border: 2px dashed var(--slate-300) !important;
+    background: var(--white) !important;
+    max-width: 1800px !important;
+    text-align: center !important;
+    transition: all 0.3s ease !important;
+}
+
+.stFileUploader:hover {
+    border-color: var(--blue-500) !important;
+    background-color: var(--blue-100) !important;
+}
+
+.stFileUploader label {
+    color: var(--slate-700) !important;
+    text-align: center !important;
+    font-weight: 500 !important;
+}
+
+/* Force file uploader components to use light theme */
+.stFileUploader > div,
+.stFileUploader [data-testid="stFileUploader"],
+.stFileUploader [data-testid="fileUploadDropzone"],
+.stFileUploader section,
+.stFileUploader button {
+    background: var(--white) !important;
+    background-color: var(--white) !important;
+    color: var(--slate-700) !important;
+}
+
+/* Radio buttons - clean side by side */
+.stRadio {
+    text-align: center !important;
+    margin: 1rem auto !important;
+    max-width: 1800px !important;
+}
+
+.stRadio label {
+    color: var(--slate-700) !important;
+    text-align: center !important;
+    font-weight: 500 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.stRadio > div {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 3rem !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+}
+
+.stRadio > div > label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    color: var(--slate-700) !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.stRadio > div > label:hover {
+    background-color: var(--blue-100) !important;
+}
+
+/* Selectbox */
+.stSelectbox label {
+    color: var(--slate-700) !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+}
+
+.stSelectbox > div > div {
+    background-color: var(--white) !important;
+    border: 2px solid var(--slate-300) !important;
+    border-radius: 6px !important;
+    color: var(--slate-700) !important;
+}
+
+/* Sliders */
+.stSlider label {
+    color: var(--slate-700) !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+}
+
+.stSlider > div > div {
+    color: var(--slate-700) !important;
+}
+
+/* Metrics */
+.stMetric {
+    background-color: var(--white) !important;
+    border: 1px solid var(--slate-300) !important;
+    border-radius: 6px !important;
+    padding: 1rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    margin: 0.5rem !important;
+}
+
+.stMetric [data-testid="metric-container"] {
+    background-color: var(--white) !important;
+    color: var(--slate-700) !important;
+}
+
+.stMetric [data-testid="metric-value"] {
+    color: var(--blue-600) !important;
+    font-weight: 600 !important;
+}
+
+/* DataFrames */
+.stDataFrame {
+    border: 1px solid var(--slate-300) !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    background: var(--white) !important;
+}
+
+/* Messages */
+.stSuccess {
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%) !important;
+    border-left: 4px solid #10b981 !important;
+    border-radius: 6px !important;
+    margin: 1rem auto !important;
+    max-width: 1800px !important;
+    color: var(--slate-700) !important;
+}
+
+.stError {
+    background: linear-gradient(135deg, #fef2f2 0%, #fef7f7 100%) !important;
+    border-left: 4px solid #ef4444 !important;
+    border-radius: 6px !important;
+    margin: 1rem auto !important;
+    max-width: 1800px !important;
+    color: var(--slate-700) !important;
+}
+
+.stWarning {
+    background: linear-gradient(135deg, #fffbeb 0%, #fefce8 100%) !important;
+    border-left: 4px solid #f59e0b !important;
+    border-radius: 6px !important;
+    margin: 1rem auto !important;
+    max-width: 1800px !important;
+    color: var(--slate-700) !important;
+}
+
+.stInfo {
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%) !important;
+    border-left: 4px solid var(--blue-500) !important;
+    border-radius: 6px !important;
+    margin: 1rem auto !important;
+    max-width: 1800px !important;
+    color: var(--slate-700) !important;
+}
+
+/* Info cards */
+.info-card {
+    background-color: var(--white) !important;
+    border: 1px solid var(--slate-300) !important;
+    border-radius: 8px !important;
+    padding: 1.5rem !important;
+    margin: 1rem auto !important;
+    color: var(--slate-700) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    max-width: 1800px !important;
+}
+
+.model-results {
+    background-color: var(--white) !important;
+    border-left: 4px solid var(--blue-500) !important;
+    padding: 1rem !important;
+    border-radius: 0 6px 6px 0 !important;
+    margin: 1rem auto !important;
+    color: var(--slate-700) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    max-width: 1800px !important;
+}
+
+.comparison-winner {
+    background-color: var(--blue-100) !important;
+    border: 2px solid var(--blue-500) !important;
+    border-radius: 8px !important;
+    padding: 1rem !important;
+    text-align: center !important;
+    color: var(--blue-600) !important;
+    font-weight: 600 !important;
+    margin: 1rem auto !important;
+    max-width: 1800px !important;
+}
+
+/* Section headers */
+.section-header {
+    color: var(--slate-900) !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    margin: 1.5rem auto 1rem auto !important;
+    border-bottom: 2px solid var(--blue-500) !important;
+    padding-bottom: 0.5rem !important;
+    width: fit-content !important;
+}
+
+/* Main title */
+.main-title {
+    color: var(--blue-600) !important;
+    text-align: center !important;
+    font-size: 30px !important;
+    font-weight: 700 !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Progress bars */
+.stProgress .st-emotion-cache-1iyw2u1 {
+    background-color: var(--blue-500) !important;
+}
+
+/* Spinner */
+.stSpinner > div {
+    border-top-color: var(--blue-500) !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .main .block-container {
+        padding: 1rem !important;
+        max-width: 100% !important;
+    }
+    
+    h1 {
+        font-size: 18px !important;
+    }
+    
+    .stRadio > div {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    .stButton > button {
+        max-width: 100% !important;
+    }
+}
+
+/* Fix file uploader button styling with subtle hover */
+.stFileUploader button {
+    background-color: var(--slate-300) !important;
+    color: var(--white) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    opacity: 1 !important;
+}
+
+.stFileUploader button:hover {
+    opacity: 0.85 !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Ensure all buttons have consistent styling with subtle hover */
+button[kind="primary"], button[kind="secondary"], .stFileUploader button {
+    background-color: var(--slate-300) !important;
+    color: var(--white) !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+    opacity: 1 !important;
+}
+
+button[kind="primary"]:hover, button[kind="secondary"]:hover {
+    opacity: 0.85 !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Control dataframe width */
+.stDataFrame {
+    max-width: 1800px !important;
+    overflow-x: auto !important;
+    margin: 0 auto !important;
+}
+
+.stDataFrame > div {
+    max-width: 1800px !important;
+}
+
+/* Smaller metric fonts */
+.stMetric [data-testid="metric-label"] {
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+}
+
+.stMetric [data-testid="metric-value"] {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+}
+
+/* Smaller general text */
+.stMarkdown p {
+    font-size: 0.95rem !important;
+}
+
+/* Smaller dataframe text */
+.stDataFrame {
+    font-size: 0.85rem !important;
+}
+
+.stDataFrame table {
+    font-size: 0.85rem !important;
+}
+
+/* Fix selectbox dropdown background */
+.stSelectbox div[data-baseweb="select"] > div {
+    background-color: var(--white) !important;
+    color: var(--slate-700) !important;
+}
+
+/* Fix dropdown menu background */
+.stSelectbox div[role="listbox"] {
+    background-color: var(--white) !important;
+}
+
+.stSelectbox div[role="option"] {
+    background-color: var(--white) !important;
+    color: var(--slate-700) !important;
+}
+
+.stSelectbox div[role="option"]:hover {
+    background-color: var(--blue-100) !important;
+    color: var(--blue-600) !important;
+}
+
+.st-gh{
+    background-color: white !important;
+}
+
+/* Fix selectbox dropdown background - target the specific classes */
+.st-emotion-cache-17l5uvc,
+.st-emotion-cache-1v77ucq {
+    background-color: var(--white) !important;
+    color: var(--slate-700) !important;
+}
+
+/* Selected option styling */
+.st-emotion-cache-17l5uvc {
+    background-color: var(--blue-100) !important;
+    color: var(--blue-600) !important;
+}
+
+/* Hover effect for unselected options */
+.st-emotion-cache-1v77ucq:hover {
+    background-color: var(--blue-100) !important;
+    color: var(--blue-600) !important;
+}
+
+/* Fix the dropdown container background */
+[data-testid="stSelectboxVirtualDropdown"] {
+    background-color: var(--white) !important;
+    border: 1px solid var(--slate-300) !important;
+    border-radius: 6px !important;
+}
+
+/* Fix the text inside dropdown options */
+.st-emotion-cache-qiev7j {
+    color: inherit !important;
+}
+
+/* Fix the main selectbox input background */
+.stSelectbox div[data-baseweb="select"] {
+    background-color: var(--white) !important;
+}
+
