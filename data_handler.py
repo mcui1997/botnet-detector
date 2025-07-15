@@ -23,10 +23,30 @@ def show_data_tab():
     st.markdown("---")  # Visual separator
     
     # Main dataset loading section
-    dataset_path = "training_datasets/UNSW_2018_Iot_Botnet_Dataset_2.csv"
+    st.markdown("### 📂 Load Training Dataset")
     
-    if st.button("📂 Load IoT Botnet Dataset", key="load_dataset_btn", use_container_width=True):
-        load_data(dataset_path)
+    # Get available training datasets
+    training_files = get_available_training_files()
+    
+    if not training_files:
+        st.error("❌ No training datasets found in 'training_datasets/' folder")
+        st.info("💡 Please add CSV files to the 'training_datasets/' folder first.")
+        return
+    
+    # Dropdown to select training dataset
+    selected_dataset = st.selectbox(
+        "Choose training dataset:",
+        options=training_files,
+        format_func=lambda x: x,
+        key="training_dataset_selector",
+        help="Select which training dataset to use for model training"
+    )
+    
+    if selected_dataset:
+        dataset_path = f"training_datasets/{selected_dataset}"
+        
+        if st.button("📂 Load IoT Botnet Dataset", key="load_dataset_btn", use_container_width=True):
+            load_data(dataset_path)
     
     # Show current dataset status
     if st.session_state.get('data_loaded', False):
@@ -50,6 +70,27 @@ def show_data_tab():
         # Show preview
         st.markdown("**Dataset Preview:**")
         st.dataframe(data.head(10), use_container_width=True, height=300)
+
+def get_available_training_files():
+    """
+    Scan the training_datasets folder for available CSV files.
+    Returns a list of filenames.
+    """
+    training_folder = "training_datasets"
+    
+    if not os.path.exists(training_folder):
+        st.error(f"❌ Training folder '{training_folder}' not found!")
+        return []
+    
+    try:
+        # Get all CSV files in the training folder
+        files = [f for f in os.listdir(training_folder) if f.endswith('.csv')]
+        files.sort()
+        return files
+        
+    except Exception as e:
+        st.error(f"❌ Error reading training folder: {e}")
+        return []
 
 def load_data(file_path):
     """
@@ -123,6 +164,7 @@ def load_data(file_path):
             st.session_state.data = data
             st.session_state.data_loaded = True
             st.session_state.feature_columns = feature_cols
+            st.session_state.loaded_dataset = os.path.basename(file_path)  # Store dataset name
             
         st.success("✅ Dataset loaded successfully!")
         st.rerun()
