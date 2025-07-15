@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Read the large dataset
-input_file = "training_datasets/UNSW_2018_Iot_Botnet_Dataset_2.csv"
-output_file = "training_datasets/UNSW_2018_Iot_Botnet_Dataset_2_half.csv"
+input_file = "testing_datasets/UNSW_2018_Iot_Botnet_Dataset_1.csv"
+output_file = "testing_datasets/UNSW_2018_Iot_Botnet_Dataset_1_half.csv"
 
 # Column names for the dataset
 column_names = [
