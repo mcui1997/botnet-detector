@@ -8,63 +8,25 @@ This project implements and compares traditional Machine Learning (ML) and Deep 
 
 To empirically compare the effectiveness of feature engineering-based machine learning versus raw data processing deep learning for cybersecurity threat detection in IoT network environments.
 
-## Dataset Requirements
+## ⚠️ Dataset Setup (Required First Step)
 
-The system is designed to work with network traffic datasets in CSV format containing:
-- 35 columns of network flow features (packet counts, timing, protocol information)
-- Binary classification labels (Normal vs Attack traffic)
-- Support for various attack types (Reconnaissance, DoS, DDoS, etc.)
+**This application requires the UNSW 2018 IoT Botnet Dataset to function.** The datasets are not included in this repository due to their large size (1GB+ each).
 
-**Training Data Format:**
-```
-pkSeqID,stime,flgs,proto,saddr,sport,daddr,dport,pkts,bytes,state,ltime,seq,dur,mean,stddev,[...],category,subcategory
-```
+### Step 1: Download the Dataset
 
-## Methodology
+1. **Visit the official dataset page:** https://unsw-my.sharepoint.com/personal/z5131399_ad_unsw_edu_au/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fz5131399_ad_unsw_edu_au%2FDocuments%2FBot-IoT_Dataset%2FDataset%2FEntire%20Dataset&ga=1
 
-### Machine Learning Approach
-**Philosophy:** Heavy feature engineering with traditional algorithms
+2. **Download required files:**
+   - `UNSW_2018_Iot_Botnet_Dataset_2.csv` (Primary training dataset - recommended)
+   - `UNSW_2018_Iot_Botnet_Dataset_3.csv` (For testing - optional)
+   - `UNSW_2018_Iot_Botnet_Dataset_4.csv` (For testing - optional)
 
-**Processing Pipeline:**
-1. Aggressive feature filtering to prevent data leakage
-2. Constant and near-constant feature removal
-3. Standard scaling and normalization
-4. Feature selection using statistical methods
-5. Principal Component Analysis (PCA) for dimensionality reduction
-6. Traditional algorithms: Random Forest, Gradient Boosting, Logistic Regression
+3. **Alternative option:** You can use any of the numbered datasets (1-10), but you'll need to modify the file path in the code.
 
-**Key Characteristics:**
-- Manual feature engineering and selection
-- Mathematical transforms and scaling
-- Reduced feature space (typically 8-10 features → 5 PCA components)
-- Focus on engineered feature relationships
+### Step 2: Set Up Directory Structure
 
-### Deep Learning Approach
-**Philosophy:** Minimal preprocessing with neural network feature learning
+Create the following folder structure in your project directory:
 
-**Processing Pipeline:**
-1. Basic feature filtering (same as ML for fair comparison)
-2. Simple MinMax normalization (0-1 scaling)
-3. Direct neural network input without feature engineering
-4. Multi-layer feedforward architecture with dropout regularization
-5. Automatic feature representation learning
-
-**Key Characteristics:**
-- Raw data processing approach
-- Minimal manual feature engineering
-- Neural network learns feature representations
-- Focus on network architecture and hyperparameters
-
-## Setup and Installation
-
-### Prerequisites
-```bash
-python 3.8+
-pip install streamlit pandas numpy scikit-learn tensorflow plotly
-```
-
-### Directory Structure
-Create the following directory structure before running:
 ```
 project/
 ├── app.py
@@ -72,120 +34,238 @@ project/
 ├── ml_models.py
 ├── dl_models.py
 ├── model_comparison.py
-├── training_datasets/
-│   └── UNSW_2018_Iot_Botnet_Dataset_1.csv
-└── testing_datasets/
-    ├── UNSW_2018_IoT_Botnet_Dataset_3.csv
-    └── UNSW_2018_IoT_Botnet_Dataset_4.csv
+├── generate_datasets.py
+├── training_datasets/          ← Create this folder
+│   └── UNSW_2018_Iot_Botnet_Dataset_2.csv  ← Place downloaded file here
+└── testing_datasets/           ← Create this folder
+    ├── UNSW_2018_IoT_Botnet_Dataset_3.csv  ← Optional test files
+    └── UNSW_2018_IoT_Botnet_Dataset_4.csv  ← Optional test files
 ```
 
-### Data Preparation
-1. Place training dataset in `training_datasets/` folder
-2. Place test datasets in `testing_datasets/` folder
-3. Ensure all CSV files follow the 35-column format without headers
-4. Update the hardcoded path in `data_handler.py` if using different filenames
+### Step 3: Configure File Path (If Using Different Dataset)
+
+If you downloaded a different dataset file (e.g., Dataset_1.csv instead of Dataset_2.csv), update the file path in `data_handler.py`:
+
+```python
+# Line ~21 in data_handler.py
+dataset_path = "training_datasets/UNSW_2018_Iot_Botnet_Dataset_2.csv"
+
+# Change to your downloaded file:
+dataset_path = "training_datasets/UNSW_2018_Iot_Botnet_Dataset_1.csv"  # Example
+```
+
+## Setup and Installation
+
+### Prerequisites
+```bash
+python 3.8+
+```
+
+### Install Dependencies
+```bash
+pip install streamlit pandas numpy scikit-learn tensorflow plotly
+```
+
+### Alternative: Using requirements.txt
+Create a `requirements.txt` file with:
+```
+streamlit>=1.28.0
+pandas>=1.5.0
+numpy>=1.21.0
+scikit-learn>=1.0.0
+tensorflow>=2.10.0
+plotly>=5.0.0
+```
+
+Then install:
+```bash
+pip install -r requirements.txt
+```
 
 ## Running the Application
 
-### Launch Application
+### Launch the Streamlit App
 ```bash
 streamlit run app.py
 ```
 
-### Complete Workflow
+The application will open in your web browser at `http://localhost:8501`
 
-**Step 1: Data Loading**
-1. Navigate to the "Dataset Overview" tab
-2. Click "Load IoT Botnet Dataset" 
-3. Verify dataset loading (expect ~1M samples with extreme class imbalance: 99.8% attacks, 0.2% normal)
-4. The system automatically creates binary labels from category data
+## Complete Usage Workflow
 
-**Step 2: Machine Learning Training**
-1. Go to "Machine Learning Model" tab
-2. Configure feature engineering options:
-   - Apply PCA Dimensionality Reduction (recommended: enabled)
-   - Apply Standard Scaling (recommended: enabled)
-   - Apply Feature Selection (recommended: enabled)
-3. Select algorithm (Random Forest recommended)
-4. Set test split percentage (20% recommended)
-5. Click "Train ML Model"
-6. Expected results: ~90-95% accuracy with balanced sampling
+### Step 1: Data Loading and Verification
+1. **Navigate to the "📊 Data" tab**
+2. **Click "📂 Load IoT Botnet Dataset"**
+3. **Verify successful loading:**
+   - Should show ~3.5M+ network traffic records
+   - Expect extreme class imbalance (99%+ attacks, <1% normal)
+   - Check that binary labels are created automatically
 
-**Step 3: Deep Learning Training**
-1. Go to "Deep Learning Model" tab
-2. Configure network architecture:
-   - Hidden Layers: 3-5 layers
-   - Neurons per Layer: 128-256
-   - Dropout Rate: 0.2-0.3
-   - Activation: ReLU
-3. Set training parameters:
-   - Epochs: 50-100
-   - Batch Size: 128
-   - Learning Rate: 0.001
-4. Click "Train DL Model"
-5. Expected results: ~85-90% accuracy with same balanced sampling
+### Step 2: Generate Test Datasets (Optional)
+1. **Click "🔧 Generate Test Datasets"** to create synthetic test data with different attack distributions
+2. **Wait for generation** (creates 5 different test scenarios)
+3. **Files created in `testing_datasets/` folder:**
+   - `mostly_normal_traffic.csv` - Tests false positive rates
+   - `balanced_network_traffic.csv` - Balanced scenario
+   - `mixed_attack_scenarios.csv` - Multi-attack detection
+   - `stealth_attack_traffic.csv` - Subtle attack detection
+   - `ddos_heavy_traffic.csv` - High-volume attack testing
 
-**Step 4: Model Comparison and Testing**
-1. Navigate to "Model Comparison & Testing" tab
-2. Review training performance comparison
-3. Select a test dataset from the dropdown
-4. Click "Load Test Dataset"
-5. Click "TEST BOTNET DETECTION"
-6. Review botnet detection results and model performance comparison
+### Step 3: Train Machine Learning Model
+1. **Go to "🔧 ML Model" tab**
+2. **Configure feature engineering (recommended settings):**
+   - ✅ Apply PCA Dimensionality Reduction
+   - ✅ Apply Standard Scaling  
+   - ✅ Apply Feature Selection
+3. **Select algorithm:** Random Forest (recommended)
+4. **Set test split:** 20% (recommended)
+5. **Click "🚀 Train ML Model"**
+6. **Expected results:** 85-95% accuracy with engineered features
 
-## Expected Results
+### Step 4: Train Deep Learning Model
+1. **Go to "🧠 DL Model" tab**
+2. **Configure network architecture:**
+   - Hidden Layers: 3 layers (recommended)
+   - Neurons per Layer: 128 (recommended)
+   - Dropout Rate: 0.2 (recommended)
+   - Activation: ReLU (recommended)
+3. **Set training parameters:**
+   - Epochs: 50 (recommended)
+   - Batch Size: 128 (recommended)
+   - Learning Rate: 0.001 (recommended)
+4. **Click "🚀 Train DL Model"**
+5. **Expected results:** 80-90% accuracy with raw data processing
+
+### Step 5: Compare Models and Test on Unseen Data
+1. **Navigate to "⚖️ Compare & Test" tab**
+2. **Review training performance comparison**
+3. **Select a test dataset from dropdown** (original datasets or generated synthetic data)
+4. **Click "📂 Load Test Dataset"**
+5. **Click "🚀 TEST BOTNET DETECTION"**
+6. **Analyze results:**
+   - Botnet detection rates
+   - False positive rates
+   - Overall accuracy comparison
+   - Final winner determination
+
+## Expected Results and Performance
 
 ### Training Performance
-- **ML Model**: Typically achieves 90-95% accuracy on balanced training data
-- **DL Model**: Typically achieves 85-90% accuracy on balanced training data
-- **Winner**: Usually ML due to effective feature engineering on this type of tabular data
+- **ML Model:** Typically achieves 88-95% accuracy due to effective feature engineering
+- **DL Model:** Typically achieves 82-90% accuracy with raw data processing
+- **Performance Factor:** Class balancing improves both models significantly
 
 ### Testing Performance (Generalization)
-- **Performance Drop**: Both models show 3-8% performance decrease on unseen data (normal and healthy)
-- **Cross-Attack Generalization**: Models trained on Reconnaissance attacks tested on DoS attacks
-- **Realistic Results**: 80-90% accuracy range indicating good but not perfect generalization
+- **Performance Drop:** 3-8% decrease on unseen data (normal and expected)
+- **Cross-Dataset Testing:** Models generalize well across different attack types
+- **Final Accuracy Range:** 80-92% on unseen data (production-ready performance)
 
-### Key Insights
-1. **Feature Engineering Advantage**: ML benefits significantly from domain-specific feature engineering
-2. **Data Leakage Prevention**: Aggressive feature filtering is crucial for realistic performance
-3. **Class Imbalance Handling**: Balanced sampling during training improves generalization
-4. **Model Robustness**: Both approaches can generalize across different attack types
+### Key Findings
+1. **ML Advantage:** Feature engineering provides significant benefits for structured network data
+2. **DL Capability:** Neural networks can learn complex patterns without manual feature engineering
+3. **Generalization:** Both approaches maintain good performance on completely new data
+4. **Real-World Applicability:** Results demonstrate production-viable detection capabilities
 
 ## Technical Implementation Details
 
-### Data Preprocessing
-- **Label Hiding**: Test data labels are removed before prediction to simulate real deployment
-- **Feature Consistency**: Same preprocessing pipeline applied to training and testing data
-- **Balanced Sampling**: Equal numbers of normal and attack samples for training (typically 2k each)
+### Dataset Format Requirements
+The system expects CSV files with exactly 35 columns in this order:
+```
+pkSeqID,stime,flgs,proto,saddr,sport,daddr,dport,pkts,bytes,state,ltime,seq,dur,mean,stddev,
+res_bps_payload,res_pps_payload,res_bps_ratio,res_pps_ratio,ar_bps_payload,ar_pps_payload,
+ar_bps_ratio,ar_pps_ratio,ar_bps_delta,trans_depth,response_body_len,ct_srv_src,ct_srv_dst,
+ct_dst_ltm,ct_src_ltm,ct_src_dport_ltm,ct_dst_sport_ltm,category,subcategory
+```
 
-### Model Architecture
-- **ML Pipeline**: Feature filtering → Scaling → Selection → PCA → Classification
-- **DL Pipeline**: Feature filtering → MinMax scaling → Neural network → Classification
+### Methodology Differences
 
-### Performance Evaluation
-- **Metrics**: Accuracy, Precision, Recall, F1-Score
-- **Botnet Detection Focus**: Results presented in terms of threat detection capability
-- **Generalization Testing**: Models tested on completely different attack types than training
+**Machine Learning Approach:**
+- Heavy feature engineering and mathematical transforms
+- Statistical feature selection and PCA dimensionality reduction
+- Traditional algorithms: Random Forest, Gradient Boosting, Logistic Regression
+- Reduced feature space (typically 20+ features → 5-8 final features)
+
+**Deep Learning Approach:**
+- Minimal preprocessing with raw data input
+- Simple MinMax normalization (0-1 scaling) only
+- Multi-layer neural network with automatic feature learning
+- Full feature space with network-learned representations
+
+### Data Processing Pipeline
+1. **Feature Filtering:** Remove metadata and high-cardinality features to prevent data leakage
+2. **Class Balancing:** Equal sampling of normal and attack traffic for fair training
+3. **Label Creation:** Automatic binary classification from category data (Normal vs Attack)
+4. **Pipeline Consistency:** Same preprocessing applied to training and testing data
 
 ## Troubleshooting
 
-### Common Issues
-1. **File Path Errors**: Ensure dataset files are in correct directories with exact filenames
-2. **Column Mismatch**: Verify test datasets have same 35-column structure as training data
-3. **Memory Issues**: Large datasets (1M+ samples) are automatically sampled to 200k for efficiency
-4. **Perfect Accuracy**: Indicates data leakage; check feature filtering implementation
+### Common Issues and Solutions
 
-### Data Format Requirements
-- CSV files without headers
-- 35 columns exactly
-- Last two columns: category, subcategory
-- Comma-separated values
-- Categories: "Normal" for legitimate traffic, specific names for attacks
+**1. "File not found" Error**
+```
+❌ File not found: training_datasets/UNSW_2018_Iot_Botnet_Dataset_2.csv
+```
+- **Solution:** Download the dataset files and place them in the correct `training_datasets/` folder
+- **Check:** Verify the file name exactly matches what's in `data_handler.py`
+
+**2. "Category column not found" Error**
+```
+❌ Category column not found!
+```
+- **Solution:** Ensure you downloaded the complete UNSW 2018 dataset with all 35 columns
+- **Check:** The CSV should have 'category' and 'subcategory' as the last two columns
+
+**3. Memory Issues with Large Datasets**
+```
+❌ Error loading dataset: Memory error
+```
+- **Solution:** The system automatically samples large datasets (>1M records) to manageable sizes
+- **Alternative:** Use a smaller dataset file or increase your system's available RAM
+
+**4. Perfect Accuracy (100%)**
+```
+⚠️ Perfect accuracy detected - potential overfitting
+```
+- **Solution:** This indicates possible data leakage; the system includes warnings for this
+- **Note:** Real-world performance should be 80-95%, not 100%
+
+**5. Training Takes Too Long**
+```
+Training stuck at "Fitting model..."
+```
+- **Solution:** Reduce dataset size, use fewer epochs for DL, or try simpler ML algorithms
+- **Recommended:** Start with 50k samples for initial testing
+
+### Performance Expectations
+
+**Normal Performance Ranges:**
+- **Training Accuracy:** 85-95% (both ML and DL)
+- **Testing Accuracy:** 80-92% (3-8% drop is normal)
+- **Training Time:** 10-60 seconds for ML, 30-180 seconds for DL
+- **Memory Usage:** 2-4GB RAM for full datasets
 
 ## Model Export and Deployment
 
-Trained models are automatically stored in session state and can be exported for deployment. The system maintains complete preprocessing pipelines ensuring consistent feature engineering between training and production environments.
+Trained models are automatically stored in Streamlit session state with complete preprocessing pipelines. This ensures:
+- **Consistent preprocessing** between training and production
+- **Feature engineering pipeline preservation** for ML models
+- **Neural network architecture preservation** for DL models
+- **Ready for deployment** with proper input preprocessing
+
+## Dataset Citation
+
+If using this code for research, please cite the original dataset:
+
+**UNSW-NB15 and Bot-IoT datasets:**
+Koroniotis, N., Moustafa, N., Sitnikova, E., & Turnbull, B. (2019). Towards the development of realistic botnet dataset in the internet of things for network forensic analytics: Bot-iot dataset. Future Generation Computer Systems, 100, 779-796.
 
 ## Conclusion
 
-This implementation provides a comprehensive comparison of ML and DL approaches for IoT botnet detection, demonstrating that traditional machine learning with proper feature engineering often outperforms deep learning on structured network traffic data, particularly when data leakage is properly prevented and realistic evaluation conditions are maintained.
+This implementation provides a comprehensive, hands-on comparison of ML vs DL approaches for IoT botnet detection. The system demonstrates that:
+
+1. **Traditional ML with feature engineering** often outperforms deep learning on structured network data
+2. **Both approaches** can achieve production-viable detection rates (80-90%+)
+3. **Proper evaluation methodology** (balanced training, unseen testing, data leakage prevention) is crucial for realistic results
+4. **Real-world deployment** requires careful preprocessing pipeline management
+
+The project serves as both a practical botnet detection tool and an educational platform for understanding the trade-offs between different machine learning approaches in cybersecurity applications.

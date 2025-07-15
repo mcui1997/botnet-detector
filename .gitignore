@@ -1,9 +1,7 @@
 # IoT Botnet Detection Project .gitignore
 
 # Dataset Files (Large CSV files)
-training_datasets/
 testing_datasets/
-*.csv
 
 # Trained Model Files
 *.pkl

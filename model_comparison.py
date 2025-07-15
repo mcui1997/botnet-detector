@@ -52,7 +52,7 @@ def show_training_comparison():
         st.markdown("**🔧 ML Model Results:**")
         ml_results = st.session_state.ml_results
         for metric, value in ml_results.items():
-            if metric != 'training_time':
+            if metric not in ['training_time', 'precision', 'recall']:
                 st.metric(metric.replace('_', ' ').title(), f"{value:.1f}%")
     
     # DL Results
@@ -60,15 +60,12 @@ def show_training_comparison():
         st.markdown("**🧠 DL Model Results:**")
         dl_results = st.session_state.dl_results
         for metric, value in dl_results.items():
-            if metric != 'training_time':
+            if metric not in ['training_time', 'precision', 'recall']:
                 st.metric(metric.replace('_', ' ').title(), f"{value:.1f}%")
     
-    # Determine training winner
-    ml_avg = (ml_results['accuracy'] + ml_results['precision'] + ml_results['recall'] + ml_results['f1_score']) / 4
-    dl_avg = (dl_results['accuracy'] + dl_results['precision'] + dl_results['recall'] + dl_results['f1_score']) / 4
-    
-    winner = "Deep Learning" if dl_avg > ml_avg else "Machine Learning"
-    st.success(f"🏆 Training Winner: {winner} Model ({max(ml_avg, dl_avg):.1f}% avg)")
+    # Determine training winner (using only accuracy and f1_score)
+    ml_avg = (ml_results['accuracy'] + ml_results['f1_score']) / 2
+    dl_avg = (dl_results['accuracy'] + dl_results['f1_score']) / 2
 
 def show_testing_section():
     """Handle the test dataset selection and testing functionality"""

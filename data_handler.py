@@ -5,6 +5,8 @@ Handles CSV files without headers by providing proper column names.
 """
 import streamlit as st
 import pandas as pd
+import subprocess
+import sys
 import os
 
 def show_data_tab():
@@ -14,7 +16,13 @@ def show_data_tab():
     st.markdown('<h2 class="section-header" data-testid="data-header">📊 Dataset Overview</h2>', 
                 unsafe_allow_html=True)
     
-    # Hardcoded dataset path - update this to your training file
+    # Test dataset generator button (top)
+    if st.button("🔧 Generate Test Datasets", key="generate_test_data", use_container_width=True):
+        run_dataset_generator()
+    
+    st.markdown("---")  # Visual separator
+    
+    # Main dataset loading section
     dataset_path = "training_datasets/UNSW_2018_Iot_Botnet_Dataset_2.csv"
     
     if st.button("📂 Load IoT Botnet Dataset", key="load_dataset_btn", use_container_width=True):
@@ -31,13 +39,13 @@ def show_data_tab():
             attack_counts = data['attack'].value_counts()
             normal_count = attack_counts.get(0, 0)
             attack_count = attack_counts.get(1, 0)
-            st.info(f"🎯 Class Distribution: Normal: {normal_count:,} | Attacks: {attack_count:,}")
+            st.info(f"Class Distribution: Normal: {normal_count:,} | Attacks: {attack_count:,}")
         
         # Show attack types breakdown
         if 'category' in data.columns and attack_count > 0:
             attack_types = data[data['attack'] == 1]['category'].value_counts()
             top_attacks = dict(list(attack_types.items())[:5])
-            st.info(f"🚨 Top Attack Types: {top_attacks}")
+            st.info(f"Top Attack Types: {top_attacks}")
         
         # Show preview
         st.markdown("**Dataset Preview:**")
@@ -127,3 +135,52 @@ def load_data(file_path):
         st.error(f"❌ Error parsing CSV: {str(e)}")
     except Exception as e:
         st.error(f"❌ Error loading dataset: {str(e)}")
+
+def run_dataset_generator():
+    """
+    Run the external generate_datasets.py script to create test datasets.
+    """
+    try:
+        # Check if generate_datasets.py exists
+        if not os.path.exists("generate_datasets.py"):
+            st.error("❌ generate_datasets.py file not found! Please create it first.")
+            st.info("💡 Create generate_datasets.py with the dataset generator code.")
+            return
+        
+        with st.spinner("Running dataset generator..."):
+            # Run the external Python script with UTF-8 encoding
+            result = subprocess.run(
+                [sys.executable, "generate_datasets.py"], 
+                capture_output=True, 
+                text=True,
+                encoding='utf-8',
+                timeout=60
+            )
+            
+            if result.returncode == 0:
+                st.success("✅ Test datasets generated successfully!")
+                
+                # Check what files were created
+                test_folder = "testing_datasets"
+                if os.path.exists(test_folder):
+                    files = [f for f in os.listdir(test_folder) if f.endswith('.csv')]
+                    if files:
+                        st.info(f"📁 Created {len(files)} test datasets: {', '.join(files)}")
+                        st.info("🎯 Ready for testing! Go to 'Compare & Test' tab to use them.")
+                    else:
+                        st.warning("⚠️ No CSV files found in testing_datasets folder")
+                else:
+                    st.warning("⚠️ testing_datasets folder not created")
+                    
+            else:
+                st.error("❌ Error running dataset generator!")
+                if result.stderr:
+                    st.error(f"Error details: {result.stderr}")
+                if result.stdout:
+                    st.info(f"Output: {result.stdout}")
+                    
+    except subprocess.TimeoutExpired:
+        st.error("❌ Dataset generation timed out (>60 seconds)")
+    except Exception as e:
+        st.error(f"❌ Error running generator: {str(e)}")
+        st.info("💡 Make sure generate_datasets.py exists and is executable.")

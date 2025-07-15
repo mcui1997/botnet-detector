@@ -305,19 +305,10 @@ def show_ml_tab():
                 # Calculate accuracy and check performance
                 accuracy = accuracy_score(y_test, y_pred)
                 
-                if accuracy == 1.0:
-                    st.warning("⚠️ Perfect accuracy detected - potential overfitting")
-                elif accuracy > 0.98:
-                    st.warning(f"⚠️ Very high accuracy ({accuracy:.1%}) - check for overfitting")
-                elif accuracy > 0.85:
-                    st.success(f"✅ Good performance ({accuracy:.1%}) - realistic and generalizable")
-                else:
-                    st.info(f"📊 Moderate performance ({accuracy:.1%})")
-                
                 # Calculate all metrics
                 precision = precision_score(y_test, y_pred, average='weighted', zero_division=0) * 100
                 recall = recall_score(y_test, y_pred, average='weighted', zero_division=0) * 100
-                f1 = f1_score(y_test, y_pred, average='weighted', zero_division=0) * 100
+                f1 = f1_score(y_test, y_pred, average='binary', zero_division=0) * 100
                 
                 # Store results
                 st.session_state.ml_results = {
@@ -350,19 +341,12 @@ def show_ml_tab():
     if st.session_state.ml_trained:
         st.markdown("### 📊 Training Results")
         
-        results_col1, results_col2, results_col3, results_col4 = st.columns(4)
+        results_col1, results_col2 = st.columns(2)
         
         with results_col1:
             st.metric("Accuracy", f"{st.session_state.ml_results['accuracy']:.1f}%")
         with results_col2:
-            st.metric("Precision", f"{st.session_state.ml_results['precision']:.1f}%")
-        with results_col3:
-            st.metric("Recall", f"{st.session_state.ml_results['recall']:.1f}%")
-        with results_col4:
             st.metric("F1-Score", f"{st.session_state.ml_results['f1_score']:.1f}%")
         
         st.info(f"⏱️ Training Time: {st.session_state.ml_results['training_time']:.2f} seconds")
         
-        # Model export information
-        st.markdown("### 💾 Model Ready for Export")
-        st.success("📦 Model pipeline stored and ready for testing on unseen data")

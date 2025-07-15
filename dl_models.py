@@ -55,7 +55,6 @@ def show_dl_tab():
         return
     
     st.markdown("**Approach:** Neural network using raw data (minimal feature engineering)")
-    st.info("🧠 **DL Philosophy**: Let the network learn feature representations automatically from raw data")
     
     # Configuration options
     col1, col2 = st.columns(2)
@@ -297,7 +296,7 @@ def show_dl_tab():
                 accuracy = accuracy_score(y_test, y_pred)
                 precision = precision_score(y_test, y_pred, average='weighted', zero_division=0)
                 recall = recall_score(y_test, y_pred, average='weighted', zero_division=0)
-                f1 = f1_score(y_test, y_pred, average='weighted', zero_division=0)
+                f1 = f1_score(y_test, y_pred, average='binary', zero_division=0)
                 
                 # Performance assessment
                 if accuracy == 1.0:
@@ -341,21 +340,16 @@ def show_dl_tab():
     if st.session_state.dl_trained:
         st.markdown("### 📊 Training Results")
         
-        results_col1, results_col2, results_col3, results_col4 = st.columns(4)
+        results_col1, results_col2 = st.columns(2)
         
         with results_col1:
             st.metric("Accuracy", f"{st.session_state.dl_results['accuracy']:.1f}%")
         with results_col2:
-            st.metric("Precision", f"{st.session_state.dl_results['precision']:.1f}%")
-        with results_col3:
-            st.metric("Recall", f"{st.session_state.dl_results['recall']:.1f}%")
-        with results_col4:
             st.metric("F1-Score", f"{st.session_state.dl_results['f1_score']:.1f}%")
         
         st.info(f"⏱️ Training Time: {st.session_state.dl_results['training_time']:.2f} seconds")
         
         # DL Approach Summary
-        st.markdown("### 🧠 Deep Learning Approach Used")
         st.success("""
         ✅ **Raw data processing** - minimal feature engineering
         ✅ **Simple MinMax normalization** - no PCA or feature selection  
@@ -419,6 +413,4 @@ def show_dl_tab():
                 )
                 st.plotly_chart(fig_loss, use_container_width=True)
         
-        # Model export information
-        st.markdown("### 💾 Model Ready for Export")
         st.success("📦 DL model pipeline stored and ready for testing on unseen data")
